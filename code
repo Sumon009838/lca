@@ -1,0 +1,39 @@
+ll lca(ll a,ll b)
+{
+        int c=min(dist1[a],dist1[b]);
+        int d=dist1[a]-c;
+        int i;
+        for(i=20;i>=0;i--)
+        {
+            if((d&(1<<i)))
+            {
+                d=d-(1<<i);
+                a=dp[i][a];
+            }
+        }
+        d=dist1[b]-c;
+        for(i=20;i>=0;i--)
+        {
+            if((d&(1<<i)))
+            {
+                d=d-(1<<i);
+                b=dp[i][b];
+            }
+        }
+        if(a==b)
+        {
+            return a;
+        }
+        d=dist1[a];
+        for(i=20;i>=0;i--)
+        {
+            if((d>(1<<i))&&dp[i][a]!=dp[i][b])
+            {
+                a=dp[i][a];
+                b=dp[i][b];
+                d=d-(1<<i);
+            }
+        }
+        a=dp[0][a];
+        return a;
+}
